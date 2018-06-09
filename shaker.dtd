@@ -1,0 +1,30 @@
+<!DOCTYPE shaker
+[
+  
+  <!ELEMENT shaker (job*)>
+  <!ATTLIST shaker
+    delay     CDATA #IMPLIED
+    verbose   CDATA #IMPLIED
+    mailto    CDATA #IMPLIED
+    daemon    CDATA #IMPLIED
+    pidfile   CDATA #IMPLIED
+  >
+  
+  <!ELEMENT job (ps* | file*)>
+  <!ATTLIST job
+    name  CDATA   #REQUIRED
+  >
+  
+  <!ELEMENT ps (grep+ | base*)>
+  <!ATTLIST ps
+    min   CDATA   #IMPLIED
+    max   CDATA   #IMPLIED
+  >
+  <!ELEMENT grep (#PCDATA)>
+  <!ELEMENT base (#PCDATA)>
+  
+  <!ELEMENT file (#PCDATA)>
+  <!ATTLIST file
+      mtime   CDATA   #IMPLIED
+  >
+]>

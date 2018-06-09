@@ -1,0 +1,140 @@
+#!/usr/bin/perl
+################################################################################
+# SHAKER - Perl monitoring tool - v1.1 
+# v1.0 : first deployed 
+# v1.1 : added complete report attached with mails if verbose="verbose"
+#        able to run multiple daemon in a same time by using a pidfile
+#
+# Serge Golovanow
+################################################################################
+#zsparam RUN ou STOP
+#/bin/bash /full/path/to/chk_locks
+
+#Pragma et modules Perl :
+use strict;
+use warnings;
+#use diagnostics;
+#use Data::Dumper;
+
+BEGIN {   #avant toute chose, rajouter le repertoire du script à @INC
+  $0 =~ /(\.?(\/.+)+\/).*/;   # $0 est le chemin d'appel complet du script
+  my $basedir = $1;   #extraction du répertoire contenant le script
+  if ($basedir) { unshift(@INC,$basedir); }   #rajout au début de @INC
+}
+
+#Vérifications sur le fichier de conf : 
+if (!$ARGV[0]) { print STDERR "You must specify a configuration file ! Aborting...\n"; exit 1; }
+my $fileconf = Functions::confcheck($ARGV[0]);    # $fileconf réutilisé pour Loader::load()
+if (!$fileconf) { #Si le fichier n'existe pas on s'arrête
+  print STDERR "Configuration file ".$ARGV[0]." not found ! Aborting...\n";
+  exit 1;
+}
+
+#Chargement des composants :
+use Functions;  #librairie de fonctions diverses
+use Checking;   #classe
+use Job;        #classe, contient des Ps et des File
+use Ps;         #classe; implémente Checking
+use File;       #classe; implémente Checking
+use Loader;     #librairie, crée des Jobs depuis le fichier de conf XML
+
+my @jobs = ();    #contiendra les objets jobs
+my @errors = ();  #listing des erreurs
+my %conf;         #configuration globale du script
+
+
+#Let's go !
+
+#Chargement de la conf :
+if (!Loader::load($fileconf,\@jobs,\%conf)) { exit 1; }   #chargement du fichier XML dans des objets
+
+#Lancement du daemon si nécessaire, avec la boucle infine ; sinon juste un check
+if ($conf{'daemon'}) { 
+  if ($conf{'mail'} && $conf{'pidfile'}) { Functions::daemonize($conf{'pidfile'}); }
+  else {   #En daemon, il faut préciser des adresses mail et un PIDfile
+    if (!$conf{'mail'}) { print "Email addresses be configurated for daemon mode ! Aborting...\n"; }
+    if (!$conf{'pidfile'}) { print "PID file must be configurated for daemon mode ! Aborting...\n"; }
+    exit 1;
+  }
+  while (1) { #si on est en daemon, boucle infinie
+    check();
+    sleep $conf{'delay'};
+  }  
+  
+}
+else { check(); }
+
+
+################################################################################
+
+sub check { # Logique principale
+  my $count = 0;  #Nombre total de jobs avec erreur(s)
+  my $alerte = 0; #Booleen indiquant qu'il faut afficher/mailer le message
+  my $tempfile;
+  
+  for (my $i=0;$i<@jobs;$i++) { #Boucle sur les Jobs
+    my $check = $jobs[$i]->check();     #Lancement des vérifications et récupération du résultat
+    
+    if ($conf{'verbose'} && !$conf{'daemon'} ) { print $jobs[$i]->getName()."\n".$jobs[$i]->getdisp()."\n"; }
+    
+    if ($check !~ /^0+$/) { #Si le resultat de job->check() ne renvoie pas que des 0
+      $count++; 
+      if (!$conf{'verbose'} && !$conf{'daemon'} ) { print $jobs[$i]->getName()."\n".$jobs[$i]->getdisp()."\n"; }      
+    }
+    if ( defined($errors[$i]) && $errors[$i] == $check) {  # pas de changement (probleme ou pas)
+    }
+    elsif ($check !~ /^0+$/) { # changement ou apparition de probleme 
+      $alerte = 1;
+    }
+    else { #fin de probleme ou premier passage
+    }
+    $errors[$i] = $check;
+  } 
+  
+  if ($conf{'daemon'} && $conf{'mail'} && $alerte) { #si on maile
+    my $disp;  #Message complet à afficher/mailer
+    my ($sec,$min,$heure,$jour,$mois,$annee) = localtime(time);
+    
+    my $hostname = `hostname`;
+    my $mailto = $conf{'mailto'};    
+    chomp($hostname);  #s/\n*$//
+    #$disp = 'On '.$hostname." at $heure:$min (local time): \n\n";
+    $disp = 'On '.$hostname." at ".sprintf("%02d:%02d",$heure,$min)." (local time): \n\n";
+    
+    if ($conf{'verbose'}) {
+      #$tempfile = "/tmp/shaker-$annee$mois$jour-$heure$min$sec.tmp";
+      $tempfile = "/tmp/shaker-$annee".sprintf("%02d%02d-%02d%02d%02d",$mois,$jour,$heure,$min,$sec).".tmp"; #$annee$mois$jour-$heure$min$sec.tmp";
+      open TEMPFILE, ">$tempfile"; #ouverture du fichier qui sera envoyé par mail.
+      print TEMPFILE 'On '.$hostname." at ".sprintf("%02d:%02d",$heure,$min)." (local time): \r\n\r\n";
+    }
+        
+    for (my $i=0;$i<@jobs;$i++) { 
+      if ($errors[$i] !~ /^0+$/) { $disp .= $jobs[$i]->getName()."\n".$jobs[$i]->getdisp()."\n"; }
+      if ($conf{'verbose'}) {
+        my $infos = $jobs[$i]->getName()."\n".$jobs[$i]->getdisp()."\n";
+        $infos =~ s/\n/\r\n/g; #remplacement global des \n par \r\n pour lecture sous windows 
+        print TEMPFILE $infos;
+        $infos = ''; 
+      }
+    }
+    open (MAIL, "|/usr/bin/mailx -s '[Shaker] $count job".Functions::pluriel($count)." with issue on $hostname' $mailto");
+    print MAIL $disp."This is an automatic email, please do not answer.\nGenerated by Shaker\n";
+    
+    if ($conf{'verbose'}) { 
+      print TEMPFILE "\r\nGenerated by Shaker\r\n";
+      close TEMPFILE;  
+      `uuencode $tempfile report.txt > $tempfile.txt`;  #encodage pour ajout de pièce jointe
+      print MAIL `cat $tempfile.txt`;
+      unlink $tempfile,"$tempfile.txt"; #suppression des fichiers tant qu'on y est
+    }
+    #print STDOUT "A mail was sent\n";
+    close MAIL;
+  }
+  print "Checking done, $count error".Functions::pluriel($count)."\n"; #" (@errors)\n";
+}###############################################################################
+
+sub error {
+  my ($message) = @_;
+  #print "  !  $message\n";
+  return undef;
+}###############################################################################

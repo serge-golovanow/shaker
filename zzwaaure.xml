@@ -1,0 +1,18 @@
+<shaker verbose="2">
+  <job name="zzwaaure job (file transfer between automates)">
+      <ps min="1" max="1">
+          <grep>zzwaaure.p</grep>
+          <grep>mmes_mgr</grep>
+          <base>/db/prd/guidb</base>
+          <base>/db/prd/mesdb</base>
+          <base>/db/prd/intdb</base>
+          <base>/db/prd/msqdb</base>
+          <base>/db/prd/trchst</base>        
+      </ps>
+      <file file="/users/mfg_mgr/dzzwaaure.log" />
+      <file file="/mes/zzmes/flag/prd_zzwaaure.flag" />
+      <file file="/users/mbxowl/fdir.lis" mtime="300" />
+      <file file="/users/automate/frdir.lis" mtime="600" />
+      <file file="/users/automate/fsdir.lis" mtime="1800" />      
+  </job>
+</shaker>

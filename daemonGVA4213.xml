@@ -1,0 +1,388 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+
+<shaker verbose="verbose" pidfile="/tmp/shaker.pid" delay="120" mailto="user1@mail.com user2@mail.com" daemon="daemon">
+
+<!-- DEV -->
+
+  <job name="DEV integrator : xi -> msq (zslaunch)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zslaunch.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>
+  </job>  
+  <job name="DEV dispatcher : msq -> interim area (zsmaind)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zsmaind.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>   
+  </job>
+  <job name="DEV receiver : interim area -> msq (zsmainr)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zsmainr.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>   
+  </job>
+  <job name="DEV generator : msq -> xi (zsgener)">
+    <ps min="1"> 
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zsgener.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>  
+  </job>
+  
+  <job name="DEV zzwaause job (create automate file)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zzwaause.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>   
+  </job>
+  <job name="DEV Loading LS transaction from host (zzwaldls) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zzwaldls.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>
+  </job>
+  <job name="DEV Batch status (zzinbs00) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zzinbs00.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>
+  </job>
+  <!--
+  <job name="DEV Stock comparaison (zzistk00) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zzistk00.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>
+  </job>
+  <job name="DEV zzwaaure job (create automate file) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zzwaaure.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>   
+  </job>
+  <job name="DEV zzwagfre job (create automate file) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zzwagfre.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>   
+  </job>
+  <job name="DEV zzwapcjo job (create automate file) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/dev/pf/ful.pf -p zzwapcjo.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/dev/guidb</base>
+      <base>/db/dev/mesdb</base>
+      <base>/db/dev/intdb</base>
+      <base>/db/dev/msqdb</base>
+      <base>/db/dev/trchst</base>
+    </ps>   
+  </job>    
+-->
+  
+<!--  QAS  -->
+
+  <job name="QAS integrator : xi -> msq (zslaunch)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zslaunch.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>
+  </job>  
+  <job name="QAS dispatcher : msq -> interim area (zsmaind)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zsmaind.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>   
+  </job>
+  <job name="QAS receiver : interim area -> msq (zsmainr)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zsmainr.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>   
+  </job>
+  <job name="QAS generator : msq -> xi (zsgener)">
+    <ps min="1"> 
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zsgener.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>  
+  </job>
+  
+  <job name="QAS zzwaause job (create automate file)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zzwaause.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>   
+  </job>
+  <job name="QAS Loading LS transaction from host (zzwaldls) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zzwaldls.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>
+  </job>
+  <job name="QAS Batch status (zzinbs00) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zzinbs00.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>
+  </job>
+<!--
+  <job name="QAS Stock comparaison (zzistk00) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zzistk00.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>
+  </job>
+  <job name="QAS zzwaaure job (create automate file) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zzwaaure.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>   
+  </job>
+  <job name="QAS zzwagfre job (create automate file) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zzwagfre.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>   
+  </job>
+  <job name="QAS zzwapcjo job (create automate file) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/qas/pf/ful.pf -p zzwapcjo.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/qas/guidb</base>
+      <base>/db/qas/mesdb</base>
+      <base>/db/qas/intdb</base>
+      <base>/db/qas/msqdb</base>
+      <base>/db/qas/trchst</base>
+    </ps>   
+  </job>    
+-->
+
+
+
+<!-- REG -->
+
+  <job name="REG integrator : xi -> msq (zslaunch)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zslaunch.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>
+  </job>  
+  <job name="REG dispatcher : msq -> interim area (zsmaind)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zsmaind.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>   
+  </job>
+  <job name="REG receiver : interim area -> msq (zsmainr)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zsmainr.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>   
+  </job>
+  <job name="REG generator : msq -> xi (zsgener)">
+    <ps min="1"> 
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zsgener.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>  
+  </job>
+  
+  <job name="REG zzwaause job (create automate file)">
+    <ps min="1">
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zzwaause.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>   
+  </job>
+  <job name="REG Loading LS transaction from host (zzwaldls) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zzwaldls.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>
+  </job>
+  <job name="REG Batch status (zzinbs00) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zzinbs00.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>
+  </job>
+  <!--
+  <job name="REG Stock comparaison (zzistk00) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zzistk00.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>
+  </job>
+  <job name="REG zzwaaure job (create automate file) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zzwaaure.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>   
+  </job>
+  <job name="REG zzwagfre job (create automate file) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zzwagfre.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>   
+  </job>
+  <job name="REG zzwapcjo job (create automate file) : not monitored">
+    <ps>
+      <grep>_progres -b -pf /users/mmes_mgr/zzmes/reg/pf/ful.pf -p zzwapcjo.p</grep>
+      <grep>mmes_mgr</grep>
+      <base>/db/reg/guidb</base>
+      <base>/db/reg/mesdb</base>
+      <base>/db/reg/intdb</base>
+      <base>/db/reg/msqdb</base>
+      <base>/db/reg/trchst</base>
+    </ps>   
+  </job>    
+-->
+
+</shaker> 
