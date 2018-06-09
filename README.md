@@ -146,33 +146,33 @@ shaker root element
 
 ### 2.2.	Files listing
 
-File	Language	Description
+File|Language|Description
 
-shaker.pl	Perl	Main file ; executable
+shaker.pl|Perl|Main file ; executable
 
-Loader.pm	Perl	Module: Configuration loading
+Loader.pm|Perl|Module: Configuration loading
 
-Job.pm	Perl	Class: contains process and file based checkings
+Job.pm|Perl|Class: contains process and file based checkings
 
-Checking.pm	Perl	Class: defines result output for Ps and File classes
+Checking.pm|Perl|Class: defines result output for Ps and File classes
 
-Ps.pm	Perl	Class: process-based checking (includes bases connections and locks) , inherits from Checking
+Ps.pm|Perl|Class: process-based checking (includes bases connections and locks) , inherits from Checking
 
-File.pm	Perl	Class: file-based checking, inherits from Checking
+File.pm|Perl|Class: file-based checking, inherits from Checking
 
-Function.pm	Perl	Module: miscellaneous functions
+Function.pm|Perl|Module: miscellaneous functions
 
-stopshaker.sh	Unix Shell	Stop running daemon ; executable
+stopshaker.sh|Unix Shell|Stop running daemon ; executable
 
-chk_locks.sh	Unix Shell	List locks for a base ; if a usernum is specified, list locks from user, and locks with a common RecID
+chk_locks.sh|Unix Shell|List locks for a base ; if a usernum is specified, list locks from user, and locks with a common RecID
 
-locks.p	ProgressABL	Display locks for connected base
+locks.p|ProgressABL|Display locks for connected base
 
-locksload.p	ProgressABL	List locks for connected base
+locksload.p|ProgressABL|List locks for connected base
 
-convrxxid_x.p	ProgressABL	Convert a RowID to a RecID
+convrxxid_x.p|ProgressABL|Convert a RowID to a RecID
 
-shaker.dtd	DTD	Document Type Definition for XML configuration files
+shaker.dtd|DTD|Document Type Definition for XML configuration files
 
 ### 2.3. UML Class diagram
 ![UML Class diagram](UMLShaker.jpg)
