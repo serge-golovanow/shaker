@@ -1,4 +1,4 @@
-#shaker
+# shaker
 **Programme de monitoring d'application Progress OpenEdge**
 
 Surveillance basée sur :
@@ -23,7 +23,7 @@ Shaker (perl monitoring tool for MES interfaces) allows from a same tool to run
 Perl language is used, with some Shell scripts or ProgressABL procedures. XML language is used for configuration files.
 
 ## How To
-###1.1.	Create a one-shot checking configuration file
+### 1.1.	Create a one-shot checking configuration file
 As all XML files, the first line must be
 `	<?xml version="1.0"  encoding="UTF-8"?>`
 The root element is 
@@ -34,7 +34,7 @@ You can define as many job elements as needed; see below how to define a job.
 Finally the root element must be closed :
 `	</shaker>`
 
-###1.2.	Create a daemon configuration file
+### 1.2.	Create a daemon configuration file
 As all XML files, the first line must be
 `	<?xml version="1.0"  encoding="UTF-8"?>`
 In daemon mode, daemon and mailto attributes must be defined for the shaker root element; delay attribute should be defined, by default it will be 300 seconds (5 minutes):
@@ -47,7 +47,7 @@ Finally the root element must be closed :
 `	</shaker>`
 Note that if a modification is made in a daemon configuration file, Shaker must be restarted.
 
-###1.3.	Define a job
+### 1.3.	Define a job
 Each job to check has to be defined in a job element, with name attribute defined:
 `	<job name=”example job”>`
 job elements can include two verification : process-based ps, or file-based file.
@@ -69,7 +69,7 @@ file element directly contain full path to file to check. mtime attribute can be
 Don’t forget to close the job element:
 	`</job>`
 
-###1.4.	Launch Shaker
+### 1.4.	Launch Shaker
 Main file is shaker.pl: you must launch it with configuration file as parameter:
 `	./shaker.pl foo.xml`
 or
@@ -77,16 +77,16 @@ or
 Configuration file must be present in Shaker’s directory, or in current directory.
 Only one occurrence of shaker can be launched as daemon. When trying to start second occurrence, script will show what PID of running daemon is and exit.
 
-###1.5.	Stop Shaker when running in daemon mode
+### 1.5.	Stop Shaker when running in daemon mode
 stopshaker.sh shell script can be used to stop a daemon.
 
 
-###1.6.	Find if a daemon is running and what configuration file is used for
+### 1.6.	Find if a daemon is running and what configuration file is used for
 Unix command ps –ef | grep perl will show if a daemon is running, with full path to shaker.pl and configuration file name.
 
 
-##2.	Technical details
-###2.1.	Configuration files XML structure
+## 2.	Technical details
+### 2.1.	Configuration files XML structure
 shaker root element
   daemon: optional; if “daemon” value, shaker runs as a daemon. mailto must be specified.
   delay: optional; delay between two checks if daemon mode, in seconds. 300 by default.
@@ -103,7 +103,7 @@ shaker root element
       mtime: Numeric, optional; max time elapsed since last write, in seconds. If time is exceeded, an error is send
         File’s absolute path
 
-###2.2.	Files listing
+### 2.2.	Files listing
 
 File	Language	Description
 shaker.pl	Perl	Main file ; executable
@@ -120,5 +120,5 @@ locksload.p	ProgressABL	List locks for connected base
 convrxxid_x.p	ProgressABL	Convert a RowID to a RecID
 shaker.dtd	DTD	Document Type Definition for XML configuration files
 
-###2.3. Class diagram
+### 2.3. Class diagram
 ![UML Class diagram](UMLShaker.jpg)
