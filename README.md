@@ -22,7 +22,7 @@ Shaker (perl monitoring tool for MES interfaces) allows from a same tool to run
 
 Perl language is used, with some Shell scripts or ProgressABL procedures. XML language is used for configuration files.
 
-## How To
+## 1.   How To
 ### 1.1.	Create a one-shot checking configuration file
 As all XML files, the first line must be
 
@@ -174,5 +174,5 @@ convrxxid_x.p	ProgressABL	Convert a RowID to a RecID
 
 shaker.dtd	DTD	Document Type Definition for XML configuration files
 
-### 2.3. Class diagram
+### 2.3. UML Class diagram
 ![UML Class diagram](UMLShaker.jpg)
