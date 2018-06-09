@@ -10,9 +10,7 @@ Surveillance basée sur :
 Possibilité d'exécution simple ou en tâche de fond *(daemon)*, rapports par mails, configuration dans XML, multiples daemons possibles.
 
 Développé en 2009 pour tourner sur du HP-UX, sur lequel la présence de Perl était une bénédiction.
-Le système surveillé était un middleware développé en Progress OpenEdge ABL, faisant communiquer SAP XI et l'application de gestion de production industrielle basée sur MFG/Pro, chez un des leaders mondiaux des arômes et parfums de synthèse.
-
-
+Le système surveillé était un middleware développé en Progress OpenEdge ABL, faisant communiquer SAP XI et l'application de gestion de production industrielle basée sur MFG/Pro, chez un des leaders mondiaux des arômes et parfums de synthèse. Le script a été utilisé en environnement de production pour 3 usines pendant quelques mois.
 
 ---
 
@@ -75,33 +73,33 @@ ps element should have min or/and max attribute:
 
 ps element must have at least one grep element to allow script finding the process. These elements will be used to identify the process, and must be as accurate as possible. You can use the ps –ef unix command to find what can be used to find job’s process.
 
-`	<grep>/mes/progress/prgs101c/bin/_progres -b -pf 			/mes/zzmes/prd/pf/ful.pf -p zzfoobar.p</grep>`
+    `	<grep>/mes/progress/prgs101c/bin/_progres -b -pf 			/mes/zzmes/prd/pf/ful.pf -p zzfoobar.p</grep>`
 
-`	<grep>mmes_mgr</grep>`
+    `	<grep>mmes_mgr</grep>`
 
 ps element should also have base elements to check database connections and locks:
 
-`	<base>/db/prd/guidb</base>`
+    `<base>/db/prd/guidb</base>`
 
-`	<base>/db/prd/mesdb</base>`
+    `<base>/db/prd/mesdb</base>`
 
-`	<base>/db/prd/intdb</base>`
+    `<base>/db/prd/intdb</base>`
 
-`	<base>/db/prd/msqdb</base>`
+    `<base>/db/prd/msqdb</base>`
 
-`	<base>/db/prd/trchst</base>`
+    `<base>/db/prd/trchst</base>`
 
 `</ps>`
 
 file element directly contain full path to file to check. mtime attribute can be used to define what is the maximum last write time, in seconds. If it is not defined, only file existence will be checked.
 
-		`<file>/complete/path/to/file</file>`
+    `<file>/complete/path/to/file</file>`
 
-		`<file mtime=”60”>/must/be/writed/in/the/last/minute</file>`
+    `<file mtime=”60”>/must/be/writed/in/the/last/minute</file>`
 
 Don’t forget to close the job element:
 
-	`</job>`
+`</job>`
 
 
 
