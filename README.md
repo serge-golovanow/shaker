@@ -113,7 +113,6 @@ or
 `	/complete/path/to/shaker.pl bar.xml`
 
 Configuration file must be present in Shaker’s directory, or in current directory.
-Only one occurrence of shaker can be launched as daemon. When trying to start second occurrence, script will show what PID of running daemon is and exit.
 
 
 ### 1.5.	Stop Shaker when running in daemon mode
