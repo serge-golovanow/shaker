@@ -1,6 +1,8 @@
 # shaker
 **Programme de monitoring d'application Progress OpenEdge**
 
+Pour archivage.
+
 Surveillance basée sur :
 * exécution du processus OpenEdge
 * connexion au SGBD Progress OpenEdge
@@ -9,8 +11,8 @@ Surveillance basée sur :
 
 Possibilité d'exécution simple ou en tâche de fond *(daemon)*, rapports par mails, configuration dans XML, multiples daemons possibles.
 
-Développé en 2009 pour tourner sur du HP-UX, sur lequel la présence de Perl était une bénédiction.
-Le système surveillé était un middleware développé en Progress OpenEdge ABL, faisant communiquer SAP XI et l'application de gestion de production industrielle basée sur MFG/Pro, chez un des leaders mondiaux des arômes et parfums de synthèse. Le script a été utilisé en environnement de production pour 3 usines pendant quelques mois.
+Développé en 2009 pour tourner sur du HP-UX, sur lequel la présence de Perl était une bénédiction. Le système surveillé était un middleware développé en Progress OpenEdge ABL, faisant communiquer SAP XI et l'application de gestion de production industrielle basée sur MFG/Pro, chez un des leaders mondiaux des arômes et parfums de synthèse.
+
 
 ---
 
